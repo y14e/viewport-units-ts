@@ -1,5 +1,7 @@
 export function updateViewportUnit(root = document.documentElement): void {
-  if (!root) return;
+  if (!root) {
+    return;
+  }
   const html = document.documentElement;
   const horizontal = /^h/.test(window.getComputedStyle(html).getPropertyValue('writing-mode'));
   const width = html.clientWidth / 100;
