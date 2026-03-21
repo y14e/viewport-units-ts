@@ -23,16 +23,16 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
       }).forEach(([name, value]) => root.style.setProperty(name, value));
     });
   };
-  const events = ['load', 'resize'];
-  events.forEach((event) => window.addEventListener(event, update));
-  window.visualViewport?.addEventListener('resize', update);
+  const controller = new AbortController();
+  const { signal } = controller;
+  ['load', 'resize'].forEach((event) => window.addEventListener(event, update, { signal }));
+  window.visualViewport?.addEventListener('resize', update, { signal });
   const observer = new ResizeObserver(update);
   observer.observe(html);
   document.fonts.ready.then(update);
   update();
   return () => {
-    events.forEach((event) => window.removeEventListener(event, update));
-    window.visualViewport?.removeEventListener('resize', update);
+    controller.abort();
     observer.disconnect();
     if (timer) {
       cancelAnimationFrame(timer);
