@@ -4,13 +4,13 @@ export function updateViewportUnits(root = document.documentElement) {
   }
   let timer = 0;
   const html = document.documentElement;
+  const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
   const update = () => {
     if (timer) {
       return;
     }
     timer = requestAnimationFrame(() => {
       timer = 0;
-      const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
       const width = html.clientWidth / 100;
       const height = html.clientHeight / 100;
       root.style.setProperty('--vw', String(width));
@@ -23,7 +23,7 @@ export function updateViewportUnits(root = document.documentElement) {
   };
   const controller = new AbortController();
   const { signal } = controller;
-  ['load', 'resize'].forEach((event) => window.addEventListener(event, update, { signal }));
+  window.addEventListener('resize', update, { signal });
   window.visualViewport?.addEventListener('resize', update, { signal });
   const observer = new ResizeObserver(update);
   observer.observe(html);
