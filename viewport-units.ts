@@ -1,4 +1,4 @@
-export function updateViewportUnits(root: HTMLElement = document.documentElement): () => {
+export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
   if (!root) return () => {};
   let timer = 0;
   let lastVW: number | undefined;
