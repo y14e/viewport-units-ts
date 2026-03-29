@@ -1,20 +1,25 @@
 export function updateViewportUnits(root = document.documentElement) {
   if (!root) return () => {};
   let timer = 0;
+  let lastVW;
+  let lastVH;
   const html = document.documentElement;
   const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
   const update = () => {
     if (timer) return;
     timer = requestAnimationFrame(() => {
       timer = 0;
-      const width = html.clientWidth / 100;
-      const height = html.clientHeight / 100;
-      root.style.setProperty('--vw', String(width));
-      root.style.setProperty('--vh', String(height));
-      root.style.setProperty('--vi', String(horizontal ? width : height));
-      root.style.setProperty('--vb', String(horizontal ? height : width));
-      root.style.setProperty('--vmin', String(Math.min(width, height)));
-      root.style.setProperty('--vmax', String(Math.max(width, height)));
+      const vw = html.clientWidth / 100;
+      const vh = html.clientHeight / 100;
+      if (lastVW === vw && lastVH === vh) return;
+      lastVW = vw;
+      lastVH = vh;
+      root.style.setProperty('--vw', String(vw));
+      root.style.setProperty('--vh', String(vh));
+      root.style.setProperty('--vi', String(horizontal ? vw : vh));
+      root.style.setProperty('--vb', String(horizontal ? vh : vw));
+      root.style.setProperty('--vmin', String(Math.min(vw, vh)));
+      root.style.setProperty('--vmax', String(Math.max(vw, vh)));
     });
   };
   const controller = new AbortController();
