@@ -14,12 +14,13 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
       if (vw === cacheVW && vh === cacheVH) return;
       cacheVW = vw;
       cacheVH = vh;
-      root.style.setProperty('--vw', String(vw));
-      root.style.setProperty('--vh', String(vh));
-      root.style.setProperty('--vi', String(horizontal ? vw : vh));
-      root.style.setProperty('--vb', String(horizontal ? vh : vw));
-      root.style.setProperty('--vmin', String(Math.min(vw, vh)));
-      root.style.setProperty('--vmax', String(Math.max(vw, vh)));
+      const style = root.style;
+      style.setProperty('--vw', String(vw));
+      style.setProperty('--vh', String(vh));
+      style.setProperty('--vi', String(horizontal ? vw : vh));
+      style.setProperty('--vb', String(horizontal ? vh : vw));
+      style.setProperty('--vmin', String(Math.min(vw, vh)));
+      style.setProperty('--vmax', String(Math.max(vw, vh)));
     });
   };
   const controller = new AbortController();
@@ -35,6 +36,12 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     }
     controller.abort();
     observer.disconnect();
-    ['--vw', '--vh', '--vi', '--vb', '--vmin', '--vmax'].forEach((name) => root.style.removeProperty(name));
+    const style = root.style;
+    style.removeProperty('--vw');
+    style.removeProperty('--vh');
+    style.removeProperty('--vi');
+    style.removeProperty('--vb');
+    style.removeProperty('--vmin');
+    style.removeProperty('--vmax');
   };
 }
