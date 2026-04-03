@@ -36,12 +36,6 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     }
     controller.abort();
     observer.disconnect();
-    const style = root.style;
-    style.removeProperty('--vw');
-    style.removeProperty('--vh');
-    style.removeProperty('--vi');
-    style.removeProperty('--vb');
-    style.removeProperty('--vmin');
-    style.removeProperty('--vmax');
+    ['--vw', '--vh', '--vi', '--vb', '--vmin', '--vmax'].forEach((name) => root.style.removeProperty(name));
   };
 }
