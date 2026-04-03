@@ -11,7 +11,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
       timer = 0;
       const vw = html.clientWidth / 100;
       const vh = html.clientHeight / 100;
-      if (cacheVW === vw && cacheVH === vh) return;
+      if (vw === cacheVW && vh === cacheVH) return;
       cacheVW = vw;
       cacheVH = vh;
       root.style.setProperty('--vw', String(vw));
