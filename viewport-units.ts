@@ -1,17 +1,23 @@
 export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
-  if (!root) return () => {};
+  if (!root) {
+    return () => {};
+  }
   let timer: ReturnType<typeof requestAnimationFrame> | undefined;
   let cachedVW: number | undefined;
   let cachedVH: number | undefined;
   const html = document.documentElement;
   const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
   const update = () => {
-    if (timer !== undefined) return;
+    if (timer !== undefined) {
+      return;
+    }
     timer = requestAnimationFrame(() => {
       timer = undefined;
       const vw = html.clientWidth / 100;
       const vh = html.clientHeight / 100;
-      if (vw === cachedVW && vh === cachedVH) return;
+      if (vw === cachedVW && vh === cachedVH) {
+        return;
+      }
       cachedVW = vw;
       cachedVH = vh;
       const style = root.style;
