@@ -2,17 +2,17 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   if (!root) {
     return () => {};
   }
-  let timer: ReturnType<typeof requestAnimationFrame> | undefined;
+  let timer: ReturnType<typeof requestAnimationFrame> | null = null;
   let cachedVW: number | undefined;
   let cachedVH: number | undefined;
   const html = document.documentElement;
   const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
   const update = () => {
-    if (timer !== undefined) {
+    if (timer !== null) {
       return;
     }
     timer = requestAnimationFrame(() => {
-      timer = undefined;
+      timer = null;
       const vw = html.clientWidth / 100;
       const vh = html.clientHeight / 100;
       if (vw === cachedVW && vh === cachedVH) {
@@ -40,9 +40,9 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     controller?.abort();
     controller = null;
     observer.disconnect();
-    if (timer !== undefined) {
+    if (timer) {
       cancelAnimationFrame(timer);
-      timer = undefined;
+      timer = null;
     }
     const style = root.style;
     style.removeProperty('--vw');
