@@ -1,8 +1,8 @@
-# viewport-units.js
-JS snippet for updating viewport units.
+# viewport-units.ts
+TS snippet for updating viewport units.
 ## Installation
-```js
-import { updateViewportUnits } from './viewport-units.js';
+```ts
+import { updateViewportUnits } from './viewport-units';
 
 const cleanup = updateViewportUnits();
 ```
