@@ -29,21 +29,21 @@ export function updateViewportUnits(root = document.documentElement) {
       style.setProperty('--vmax', String(Math.max(vw, vh)));
     });
   };
-  const observer = new ResizeObserver(update);
-  observer.observe(html);
   let controller = new AbortController();
   const { signal } = controller;
   window.addEventListener('resize', update, { signal });
   window.visualViewport?.addEventListener('resize', update, { signal });
+  const observer = new ResizeObserver(update);
+  observer.observe(html);
   update();
   return () => {
+    controller?.abort();
+    controller = null;
+    observer.disconnect();
     if (timer !== undefined) {
       cancelAnimationFrame(timer);
       timer = undefined;
     }
-    controller?.abort();
-    controller = null;
-    observer.disconnect();
     const style = root.style;
     style.removeProperty('--vw');
     style.removeProperty('--vh');
