@@ -31,7 +31,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   };
   const observer = new ResizeObserver(update);
   observer.observe(html);
-  const controller = new AbortController();
+  let controller: AbortController | null = new AbortController();
   const { signal } = controller;
   window.addEventListener('resize', update, { signal });
   window.visualViewport?.addEventListener('resize', update, { signal });
@@ -41,7 +41,8 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
       cancelAnimationFrame(timer);
       timer = undefined;
     }
-    controller.abort();
+    controller?.abort();
+    controller = null;
     observer.disconnect();
     const style = root.style;
     style.removeProperty('--vw');
