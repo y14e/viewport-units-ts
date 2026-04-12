@@ -3,14 +3,14 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
 
   const html = document.documentElement;
 
-  let timer: number | null = null;
+  let timer: number | undefined;
   let cachedVW: number | undefined;
   let cachedVH: number | undefined;
 
   const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
 
   const update = (): void => {
-    timer = null;
+    timer = undefined;
 
     const vw = html.clientWidth / 100;
     const vh = html.clientHeight / 100;
@@ -21,7 +21,6 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     cachedVH = vh;
 
     const { style } = root;
-
     style.setProperty('--vw', String(vw));
     style.setProperty('--vh', String(vh));
     style.setProperty('--vi', String(horizontal ? vw : vh));
@@ -31,7 +30,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   };
 
   const onResize = (): void => {
-    if (timer !== null) return;
+    if (timer !== undefined) return;
     timer = requestAnimationFrame(update);
   };
 
@@ -52,13 +51,12 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     observer?.disconnect();
     observer = null;
 
-    if (timer !== null) {
+    if (timer !== undefined) {
       cancelAnimationFrame(timer);
-      timer = null;
+      timer = undefined;
     }
 
     const { style } = root;
-
     style.removeProperty('--vw');
     style.removeProperty('--vh');
     style.removeProperty('--vi');
