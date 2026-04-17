@@ -1,15 +1,19 @@
-export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
+export function updateViewportUnits(
+  root: HTMLElement = document.documentElement,
+): () => void {
   if (!root) {
-    return () => {};
+    return (): void => {};
   }
 
   const html = document.documentElement;
 
   let timer: number | undefined;
+
   let cachedVW: number | undefined;
   let cachedVH: number | undefined;
 
-  const horizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
+  const writingMode = getComputedStyle(html).getPropertyValue('writing-mode');
+  const horizontal = /^h/.test(writingMode);
 
   const update = (): void => {
     timer = undefined;
@@ -25,6 +29,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     cachedVH = vh;
 
     const { style } = root;
+
     style.setProperty('--vw', String(vw));
     style.setProperty('--vh', String(vh));
     style.setProperty('--vi', String(horizontal ? vw : vh));
@@ -63,6 +68,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     }
 
     const { style } = root;
+
     style.removeProperty('--vw');
     style.removeProperty('--vh');
     style.removeProperty('--vi');
