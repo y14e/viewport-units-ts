@@ -43,7 +43,9 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   window.visualViewport?.addEventListener('resize', onResize, { signal });
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(html);
+
   onResize();
+
   return (): void => {
     controller.abort();
     observer?.disconnect();
