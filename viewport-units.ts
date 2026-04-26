@@ -44,6 +44,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(html);
   onResize();
+
   return () => {
     controller.abort();
     observer?.disconnect();
