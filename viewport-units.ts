@@ -1,6 +1,6 @@
 export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
   if (!root) {
-    return (): void => {};
+    return () => {};
   }
 
   const html = document.documentElement;
@@ -9,7 +9,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   let cachedVH: number | undefined;
   const isHorizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
 
-  const update = (): void => {
+  const update = () => {
     timer = undefined;
     const vw = html.clientWidth / 100;
     const vh = html.clientHeight / 100;
@@ -29,7 +29,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
     style.setProperty('--vmax', String(Math.max(vw, vh)));
   };
 
-  const onResize = (): void => {
+  const onResize = () => {
     if (timer !== undefined) {
       return;
     }
@@ -44,7 +44,7 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(html);
   onResize();
-  return (): void => {
+  return () => {
     controller.abort();
     observer?.disconnect();
     observer = null;
