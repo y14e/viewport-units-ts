@@ -1,5 +1,5 @@
 export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
-  if (!root) {
+  if (!(root instanceof HTMLElement)) {
     return () => {};
   }
 
