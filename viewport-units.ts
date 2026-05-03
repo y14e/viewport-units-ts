@@ -8,9 +8,9 @@
  * @see {@link https://github.com/y14e/viewport-units-ts}
  */
 
-// -----------------------------------------------------------------------------
-// [APIs]
-// -----------------------------------------------------------------------------
+// =============================================================================
+// APIs
+// =============================================================================
 
 export function updateViewportUnits(
   root: HTMLElement = document.documentElement,
@@ -27,7 +27,7 @@ export function updateViewportUnits(
     getComputedStyle(html).getPropertyValue('writing-mode'),
   );
 
-  const update = () => {
+  function update() {
     timer = undefined;
     const vw = html.clientWidth / 100;
     const vh = html.clientHeight / 100;
@@ -45,15 +45,15 @@ export function updateViewportUnits(
     style.setProperty('--vb', String(isHorizontal ? vh : vw));
     style.setProperty('--vmin', String(Math.min(vw, vh)));
     style.setProperty('--vmax', String(Math.max(vw, vh)));
-  };
+  }
 
-  const onResize = () => {
+  function onResize() {
     if (timer !== undefined) {
       return;
     }
 
     timer = requestAnimationFrame(update);
-  };
+  }
 
   const controller = new AbortController();
   const { signal } = controller;
