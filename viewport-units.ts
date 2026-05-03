@@ -1,4 +1,20 @@
-export function updateViewportUnits(root: HTMLElement = document.documentElement): () => void {
+/**
+ * viewport-units.ts
+ *
+ * @version 1.0.0
+ * @author Yusuke Kamiyamane
+ * @license MIT
+ * @copyright Copyright (c) 2026 Yusuke Kamiyamane
+ * @see {@link https://github.com/y14e/viewport-units-ts}
+ */
+
+// -----------------------------------------------------------------------------
+// [APIs]
+// -----------------------------------------------------------------------------
+
+export function updateViewportUnits(
+  root: HTMLElement = document.documentElement,
+): () => void {
   if (!(root instanceof HTMLElement)) {
     return () => {};
   }
@@ -7,7 +23,9 @@ export function updateViewportUnits(root: HTMLElement = document.documentElement
   let timer: number | undefined;
   let lastVW: number | undefined;
   let lastVH: number | undefined;
-  const isHorizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
+  const isHorizontal = /^h/.test(
+    getComputedStyle(html).getPropertyValue('writing-mode'),
+  );
 
   const update = () => {
     timer = undefined;
