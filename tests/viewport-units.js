@@ -12,7 +12,9 @@
 // -----------------------------------------------------------------------------
 export function updateViewportUnits(root = document.documentElement) {
   if (!(root instanceof HTMLElement)) {
-    console.warn('Invalid root element. Fallback: document.documentElement.');
+    console.warn(
+      `Invalid root element. Fallback: <${document.documentElement.tagName.toLowerCase()}> element.`,
+    );
     root = document.documentElement;
   }
   const html = document.documentElement;
