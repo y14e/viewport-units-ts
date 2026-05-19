@@ -12,12 +12,19 @@
 // APIs
 // -----------------------------------------------------------------------------
 
+const initialized = new WeakMap<HTMLElement, void>();
+
 export function updateViewportUnits(root = document.documentElement) {
   if (!(root instanceof HTMLElement)) {
     console.warn(
       `Invalid root element. Fallback: <${document.documentElement.tagName.toLowerCase()}> element.`,
     );
     root = document.documentElement;
+  }
+
+  if (initialized.get(root)) {
+    console.warn('Already initialized');
+    return () => {};
   }
 
   const html = document.documentElement;
@@ -63,6 +70,7 @@ export function updateViewportUnits(root = document.documentElement) {
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(html);
   onResize();
+  initialized.set(root);
 
   return () => {
     controller?.abort();

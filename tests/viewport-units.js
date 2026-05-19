@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.4
+ * @version 1.0.6
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -10,12 +10,17 @@
 // -----------------------------------------------------------------------------
 // APIs
 // -----------------------------------------------------------------------------
+const initialized = new WeakMap();
 export function updateViewportUnits(root = document.documentElement) {
   if (!(root instanceof HTMLElement)) {
     console.warn(
       `Invalid root element. Fallback: <${document.documentElement.tagName.toLowerCase()}> element.`,
     );
     root = document.documentElement;
+  }
+  if (initialized.get(root)) {
+    console.warn('Already initialized');
+    return () => {};
   }
   const html = document.documentElement;
   let timer;
@@ -54,6 +59,7 @@ export function updateViewportUnits(root = document.documentElement) {
   let observer = new ResizeObserver(onResize);
   observer.observe(html);
   onResize();
+  initialized.set(root);
   return () => {
     controller?.abort();
     controller = null;
