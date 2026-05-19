@@ -18,7 +18,7 @@ export function updateViewportUnits(root = document.documentElement) {
     );
     root = document.documentElement;
   }
-  if (initialized.get(root)) {
+  if (initialized.has(root)) {
     console.warn('Already initialized');
     return () => {};
   }
