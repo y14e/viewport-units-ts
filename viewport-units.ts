@@ -14,7 +14,9 @@
 
 const initialized = new WeakMap<HTMLElement, void>();
 
-export function updateViewportUnits(root = document.documentElement) {
+export function updateViewportUnits(
+  root = document.documentElement,
+): () => void {
   if (!(root instanceof HTMLElement)) {
     console.warn(
       `Invalid root element. Fallback: <${document.documentElement.tagName.toLowerCase()}> element.`,
@@ -35,7 +37,7 @@ export function updateViewportUnits(root = document.documentElement) {
     getComputedStyle(html).getPropertyValue('writing-mode'),
   );
 
-  function step() {
+  function step(): void {
     timer = undefined;
     const vw = html.clientWidth / 100;
     const vh = html.clientHeight / 100;
@@ -55,7 +57,7 @@ export function updateViewportUnits(root = document.documentElement) {
     style.setProperty('--vmax', String(Math.max(vw, vh)));
   }
 
-  function onResize() {
+  function onResize(): void {
     if (timer !== undefined) {
       return;
     }
