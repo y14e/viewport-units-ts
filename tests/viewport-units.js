@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.6
+ * @version 1.0.7
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -69,12 +69,8 @@ export function updateViewportUnits(root = document.documentElement) {
       cancelAnimationFrame(timer);
       timer = undefined;
     }
-    const { style } = root;
-    style.removeProperty('--vw');
-    style.removeProperty('--vh');
-    style.removeProperty('--vi');
-    style.removeProperty('--vb');
-    style.removeProperty('--vmin');
-    style.removeProperty('--vmax');
+    ['vw', 'vh', 'vi', 'vb', 'vmin', 'vmax'].forEach((name) => {
+      root.style.removeProperty(`--${name}`);
+    });
   };
 }
