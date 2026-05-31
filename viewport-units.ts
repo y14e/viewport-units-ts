@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.7
+ * @version 1.0.8
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -48,13 +48,17 @@ export function updateViewportUnits(
 
     lastVW = vw;
     lastVH = vh;
-    const { style } = root;
-    style.setProperty('--vw', String(vw));
-    style.setProperty('--vh', String(vh));
-    style.setProperty('--vi', String(isHorizontal ? vw : vh));
-    style.setProperty('--vb', String(isHorizontal ? vh : vw));
-    style.setProperty('--vmin', String(Math.min(vw, vh)));
-    style.setProperty('--vmax', String(Math.max(vw, vh)));
+
+    for (const [name, value] of Object.entries({
+      vw: vw,
+      vh: vh,
+      vi: isHorizontal ? vw : vh,
+      vb: isHorizontal ? vh : vw,
+      vmin: Math.min(vw, vh),
+      vmax: Math.max(vw, vh),
+    })) {
+      root.style.setProperty(`--${name}`, String(value));
+    }
   }
 
   function onResize(): void {
