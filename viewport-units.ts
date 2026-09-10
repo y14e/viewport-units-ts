@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.9
+ * @version 1.0.10
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -62,11 +62,9 @@ export function updateViewportUnits(
   }
 
   function onResize(): void {
-    if (timer !== undefined) {
-      return;
+    if (timer === undefined) {
+      timer = requestAnimationFrame(step);
     }
-
-    timer = requestAnimationFrame(step);
   }
 
   let controller: AbortController | null = new AbortController();
@@ -89,8 +87,8 @@ export function updateViewportUnits(
       timer = undefined;
     }
 
-    ['vw', 'vh', 'vi', 'vb', 'vmin', 'vmax'].forEach((name) => {
+    for (const name of ['vb', 'vh', 'vi', 'vmax', 'vmin', 'vw']) {
       root.style.removeProperty(`--${name}`);
-    });
+    }
   };
 }
