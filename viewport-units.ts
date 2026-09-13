@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.10
+ * @version 1.0.11
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -90,5 +90,7 @@ export function updateViewportUnits(
     for (const name of ['vb', 'vh', 'vi', 'vmax', 'vmin', 'vw']) {
       root.style.removeProperty(`--${name}`);
     }
+
+    initialized.delete(root);
   };
 }
