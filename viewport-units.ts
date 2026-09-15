@@ -39,9 +39,8 @@ export function updateViewportUnits(
 
   function step(): void {
     timer = undefined;
-    const { clientWidth, clientHeight } = html;
-    const vw = clientWidth / 100;
-    const vh = clientHeight / 100;
+    const vw = html.clientWidth / 100;
+    const vh = html.clientHeight / 100;
 
     if (vw === lastVW && vh === lastVH) {
       return;
