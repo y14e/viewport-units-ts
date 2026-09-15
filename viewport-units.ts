@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.13
+ * @version 1.0.14
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -39,8 +39,9 @@ export function updateViewportUnits(
 
   function step(): void {
     timer = undefined;
-    const vw = html.clientWidth / 100;
-    const vh = html.clientHeight / 100;
+    const { clientWidth, clientHeight } = html;
+    const vw = clientWidth / 100;
+    const vh = clientHeight / 100;
 
     if (vw === lastVW && vh === lastVH) {
       return;
