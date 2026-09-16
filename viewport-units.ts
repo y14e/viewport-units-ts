@@ -1,7 +1,7 @@
 /**
  * viewport-units.ts
  *
- * @version 1.0.15
+ * @version 1.0.16
  * @author Yusuke Kamiyamane
  * @license MIT
  * @copyright Copyright (c) Yusuke Kamiyamane
@@ -36,13 +36,11 @@ export function updateViewportUnits(
   const isHorizontal = /^h/.test(
     getComputedStyle(html).getPropertyValue('writing-mode'),
   );
-  const { style } = root;
 
   function update(): void {
     timer = undefined;
-    const { clientWidth: w, clientHeight: h } = html;
-    const vw = w / 100;
-    const vh = h / 100;
+    const vw = html.clientWidth / 100;
+    const vh = html.clientHeight / 100;
 
     if (vw === lastVW && vh === lastVH) {
       return;
@@ -59,7 +57,7 @@ export function updateViewportUnits(
       vmin: Math.min(vw, vh),
       vw: vw,
     })) {
-      style.setProperty(`--${name}`, String(value));
+      root.style.setProperty(`--${name}`, String(value));
     }
   }
 
@@ -90,7 +88,7 @@ export function updateViewportUnits(
     }
 
     for (const name of ['vb', 'vh', 'vi', 'vmax', 'vmin', 'vw']) {
-      style.removeProperty(`--${name}`);
+      root.style.removeProperty(`--${name}`);
     }
 
     initialized.delete(root);
