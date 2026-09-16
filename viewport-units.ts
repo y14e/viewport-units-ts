@@ -38,7 +38,7 @@ export function updateViewportUnits(
   );
   const { style } = root;
 
-  function callback(): void {
+  function step(): void {
     timer = undefined;
     const { clientWidth: w, clientHeight: h } = html;
     const vw = w / 100;
@@ -65,7 +65,7 @@ export function updateViewportUnits(
 
   function onResize(): void {
     if (timer === undefined) {
-      timer = requestAnimationFrame(callback);
+      timer = requestAnimationFrame(step);
     }
   }
 
