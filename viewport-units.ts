@@ -1,17 +1,3 @@
-/**
- * viewport-units.ts
- *
- * @version 1.1.0
- * @author Yusuke Kamiyamane
- * @license MIT
- * @copyright Copyright (c) Yusuke Kamiyamane
- * @see {@link https://github.com/y14e/viewport-units-ts}
- */
-
-// -----------------------------------------------------------------------------
-// APIs
-// -----------------------------------------------------------------------------
-
 const initialized = new WeakMap<HTMLElement, void>();
 
 export function updateViewportUnits(
