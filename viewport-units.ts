@@ -44,7 +44,7 @@ export function updateViewportUnits(
       vmin: Math.min(vw, vh),
       vw: vw,
     })) {
-      style.setProperty(`--${name}`, String(value));
+      style.setProperty(`--${name}`, `${value}`);
     }
   }
 
