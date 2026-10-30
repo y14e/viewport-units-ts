@@ -1,13 +1,9 @@
 const initialized = new WeakMap<HTMLElement, void>();
 
-export function updateViewportUnits(
-  root = document.documentElement,
-): () => void {
+export function updateViewportUnits(root = document.documentElement): () => void {
   if (!(root instanceof HTMLElement)) {
     root = document.documentElement;
-    console.warn(
-      `Invalid root element. Fallback: <${root.tagName.toLowerCase()}> element.`,
-    );
+    console.warn(`Invalid root element. Fallback: <${root.tagName.toLowerCase()}> element.`);
   }
 
   if (initialized.has(root)) {
@@ -19,9 +15,7 @@ export function updateViewportUnits(
   let timer: number | undefined;
   let lastVW: number | undefined;
   let lastVH: number | undefined;
-  const isHorizontal = /^h/.test(
-    getComputedStyle(html).getPropertyValue('writing-mode'),
-  );
+  const isHorizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
   const { style } = root;
 
   function update(): void {
