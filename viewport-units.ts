@@ -20,8 +20,8 @@ export function updateViewportUnits(root = document.documentElement): () => void
 
   function update(): void {
     timer = undefined;
-    const vw = html.clientWidth / 100;
-    const vh = html.clientHeight / 100;
+    const { clientWidth: w, clientHeight: h } = html;
+    const [vw, vh] = [w / 100, h / 100];
 
     if (vw === lastVW && vh === lastVH) {
       return;
