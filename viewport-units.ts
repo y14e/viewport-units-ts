@@ -1,5 +1,11 @@
 const initialized = new WeakMap<HTMLElement, void>();
 
+interface ObjectCtor extends ObjectConstructor {
+  entries<K extends PropertyKey, V>(o: Record<K, V>): [K, V][];
+}
+
+const OBJECT_CTOR: ObjectCtor = Object;
+
 export function updateViewportUnits(root = document.documentElement): () => void {
   if (!(root instanceof HTMLElement)) {
     root = document.documentElement;
@@ -30,7 +36,7 @@ export function updateViewportUnits(root = document.documentElement): () => void
     lastVW = vw;
     lastVH = vh;
 
-    for (const [name, value] of Object.entries({
+    for (const [name, value] of OBJECT_CTOR.entries({
       vb: isHorizontal ? vh : vw,
       vh: vh,
       vi: isHorizontal ? vw : vh,
@@ -68,7 +74,7 @@ export function updateViewportUnits(root = document.documentElement): () => void
       timer = undefined;
     }
 
-    for (const name of ['vb', 'vh', 'vi', 'vmax', 'vmin', 'vw']) {
+    for (const name of ['vb', 'vh', 'vi', 'vmax', 'vmin', 'vw'] as const) {
       style.removeProperty(`--${name}`);
     }
 
