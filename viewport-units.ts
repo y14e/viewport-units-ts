@@ -1,10 +1,10 @@
-const initialized = new WeakMap<HTMLElement, void>();
-
 interface ObjectCtor extends ObjectConstructor {
   entries<K extends PropertyKey, V>(o: Record<K, V>): [K, V][];
 }
 
 const OBJECT_CTOR: ObjectCtor = Object;
+
+const initialized = new WeakMap<HTMLElement, void>();
 
 export function updateViewportUnits(root = document.documentElement): () => void {
   if (!(root instanceof HTMLElement)) {
