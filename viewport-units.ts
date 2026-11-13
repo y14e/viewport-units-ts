@@ -27,7 +27,8 @@ export function updateViewportUnits(root = document.documentElement): () => void
   function update(): void {
     timer = undefined;
     const { clientWidth: w, clientHeight: h } = html;
-    const [vw, vh] = [w / 100, h / 100];
+    const vw = w / 100;
+    const vh = h / 100;
 
     if (vw === lastVW && vh === lastVH) {
       return;
