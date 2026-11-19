@@ -1,5 +1,5 @@
 interface ObjectCtor extends ObjectConstructor {
-  entries<K extends PropertyKey, V>(o: Record<K, V>): [K, V][];
+  entries<K extends string, V>(o: { [P in K]?: V }): [K, V][];
 }
 
 const OBJECT_CTOR: ObjectCtor = Object;
