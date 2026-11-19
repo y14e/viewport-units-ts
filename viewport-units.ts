@@ -1,3 +1,10 @@
+interface ObjectCtor extends ObjectConstructor {
+  entries<K extends string, V>(o: { [P in K]?: V }): [K, V][];
+}
+
+// biome-ignore lint: enhanced type definitions for Object constructor
+declare const Object: ObjectCtor;
+
 const initialized = new WeakMap<HTMLElement, void>();
 
 export function updateViewportUnits(root = document.documentElement): () => void {
