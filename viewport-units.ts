@@ -1,9 +1,3 @@
-interface ObjectCtor extends ObjectConstructor {
-  entries<K extends string, V>(o: { [P in K]?: V }): [K, V][];
-}
-
-const OBJECT_CTOR: ObjectCtor = Object;
-
 const initialized = new WeakMap<HTMLElement, void>();
 
 export function updateViewportUnits(root = document.documentElement): () => void {
@@ -37,7 +31,7 @@ export function updateViewportUnits(root = document.documentElement): () => void
     lastVW = vw;
     lastVH = vh;
 
-    for (const [name, value] of OBJECT_CTOR.entries({
+    for (const [name, value] of Object.entries({
       vb: isHorizontal ? vh : vw,
       vh: vh,
       vi: isHorizontal ? vw : vh,
