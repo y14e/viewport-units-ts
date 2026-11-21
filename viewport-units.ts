@@ -1,5 +1,5 @@
 interface ObjectCtor extends ObjectConstructor {
-  entries<K extends string, V>(o: { [P in K]?: V }): [K, V][];
+  entries<K extends string, V>(o: Partial<Record<K, V>>): [K, V][];
 }
 
 // biome-ignore lint: enhanced type definitions for Object constructor
@@ -28,8 +28,7 @@ export function updateViewportUnits(root = document.documentElement): () => void
   function update(): void {
     timer = undefined;
     const { clientWidth: w, clientHeight: h } = html;
-    const vw = w / 100;
-    const vh = h / 100;
+    const [vw, vh] = [w / 100, h / 100];
 
     if (vw === lastVW && vh === lastVH) {
       return;
