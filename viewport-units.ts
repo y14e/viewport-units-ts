@@ -5,29 +5,29 @@ interface ObjectCtor extends ObjectConstructor {
 // biome-ignore lint: enhanced type definitions for Object constructor
 declare const Object: ObjectCtor;
 
+const root = document.documentElement;
 const initialized = new WeakMap<HTMLElement, void>();
 
-export function updateViewportUnits(root = document.documentElement): () => void {
-  if (!(root instanceof HTMLElement)) {
-    root = document.documentElement;
-    console.warn(`Invalid root element. Fallback: <${root.tagName.toLowerCase()}> element.`);
+export function updateViewportUnits(element = root): () => void {
+  if (!(element instanceof HTMLElement)) {
+    element = root;
+    console.warn(`Invalid element. Fallback: <${element.tagName.toLowerCase()}> element.`);
   }
 
-  if (initialized.has(root)) {
+  if (initialized.has(element)) {
     console.warn('Already initialized');
     return () => {};
   }
 
-  const html = document.documentElement;
   let timer: number | undefined;
   let lastVW: number | undefined;
   let lastVH: number | undefined;
-  const isHorizontal = /^h/.test(getComputedStyle(html).getPropertyValue('writing-mode'));
-  const { style } = root;
+  const isHorizontal = /^h/.test(getComputedStyle(root).getPropertyValue('writing-mode'));
+  const { style } = element;
 
   function update(): void {
     timer = undefined;
-    const { clientWidth: w, clientHeight: h } = html;
+    const { clientWidth: w, clientHeight: h } = root;
     const [vw, vh] = [w / 100, h / 100];
 
     if (vw === lastVW && vh === lastVH) {
@@ -60,9 +60,9 @@ export function updateViewportUnits(root = document.documentElement): () => void
   window.addEventListener('resize', onResize, { signal });
   window.visualViewport?.addEventListener('resize', onResize, { signal });
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
-  observer.observe(html);
+  observer.observe(root);
   onResize();
-  initialized.set(root);
+  initialized.set(element);
 
   return () => {
     controller?.abort();
@@ -79,6 +79,6 @@ export function updateViewportUnits(root = document.documentElement): () => void
       style.removeProperty(`--${name}`);
     }
 
-    initialized.delete(root);
+    initialized.delete(element);
   };
 }
