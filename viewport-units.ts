@@ -57,8 +57,11 @@ export function updateViewportUnits(element = root): () => void {
 
   let controller: AbortController | null = new AbortController();
   const { signal } = controller;
-  window.addEventListener('resize', onResize, { signal });
-  window.visualViewport?.addEventListener('resize', onResize, { signal });
+
+  [window, window.visualViewport].forEach((target) => {
+    target?.addEventListener('resize', onResize, { signal });
+  });
+
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(root);
   onResize();
