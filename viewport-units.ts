@@ -19,7 +19,7 @@ export function updateViewportUnits(element = root): () => void {
     return () => {};
   }
 
-  let timer: number | undefined;
+  let timer: ReturnType<typeof requestAnimationFrame> | undefined;
   let lastVW: number | undefined;
   let lastVH: number | undefined;
   const isHorizontal = /^h/.test(getComputedStyle(root).getPropertyValue('writing-mode'));
