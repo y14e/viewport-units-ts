@@ -6,7 +6,7 @@ interface ObjectCtor extends ObjectConstructor {
 declare const Object: ObjectCtor;
 
 const root = document.documentElement;
-const initialized = new WeakMap<HTMLElement, void>();
+const initialized = new WeakSet<HTMLElement>();
 
 export function updateViewportUnits(element = root): () => void {
   if (!(element instanceof HTMLElement)) {
@@ -65,7 +65,7 @@ export function updateViewportUnits(element = root): () => void {
   let observer: ResizeObserver | null = new ResizeObserver(onResize);
   observer.observe(root);
   onResize();
-  initialized.set(element);
+  initialized.add(element);
 
   return () => {
     controller?.abort();
