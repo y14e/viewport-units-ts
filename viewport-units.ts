@@ -20,8 +20,8 @@ export function updateViewportUnits(element = root): () => void {
   }
 
   let timer: ReturnType<typeof requestAnimationFrame> | undefined;
-  let lastVW: number | undefined;
-  let lastVH: number | undefined;
+  let lastVw: number | undefined;
+  let lastVh: number | undefined;
   const isHorizontal = /^h/.test(getComputedStyle(root).getPropertyValue('writing-mode'));
   const { style } = element;
 
@@ -30,12 +30,12 @@ export function updateViewportUnits(element = root): () => void {
     const { clientWidth: w, clientHeight: h } = root;
     const [vw, vh] = [w / 100, h / 100];
 
-    if (vw === lastVW && vh === lastVH) {
+    if (vw === lastVw && vh === lastVh) {
       return;
     }
 
-    lastVW = vw;
-    lastVH = vh;
+    lastVw = vw;
+    lastVh = vh;
 
     for (const [name, value] of Object.entries({
       vb: isHorizontal ? vh : vw,
